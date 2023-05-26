@@ -1,7 +1,11 @@
+import Header from '@/components/layout/Header'
 import './globals.css'
-import { Inter } from 'next/font/google'
+import localFont from "next/font/local"
 
-const inter = Inter({ subsets: ['latin'] })
+const yekanFont = localFont({
+  src:'./font/Yekan.woff2',
+  display: 'swap',
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -15,7 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+     
+      <body className={yekanFont.className}>
+      <Header/>
+        {children}</body>
     </html>
   )
 }

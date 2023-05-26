@@ -1,4 +1,22 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  env: {
+    API_URL:'http://localhost:3000',
+    DB_URL:
+      "mongodb+srv://mahdimoras:zSzXyKpLob8uifNd@cluster0.8r5zn0r.mongodb.net/?retryWrites=true&w=majority",
+  },
+  experimental:{
+    serverComponentsExternalPackages: ["mongoose"]
+  },
 
-module.exports = nextConfig
+  webpack: (config) => {
+    config.experiments = config.experiments || {}
+    config.experiments.topLevelAwait = true
+    return config
+  },
+  images: {
+    domains: ["res.cloudinary.com"],
+  },
+};
+
+module.exports = nextConfig;
