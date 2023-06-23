@@ -2,10 +2,15 @@ import React from "react";
 import Link from "next/link";
 import StarRatings from "react-star-ratings";
 import Image from "next/image";
+import { useCartStore } from "@/store/cart";
 
-const ProductItem = ({ product }:{product:any}) => {
+const ProductItem = ({ product }: { product: Product }) => {
+  const addToCart = useCartStore((state) => state.addToCart);
   return (
-    <article dir="rtl" className="border border-gray-200 overflow-hidden bg-white shadow-sm rounded mb-5">
+    <article
+      dir="rtl"
+      className="border border-gray-200 overflow-hidden bg-white shadow-sm rounded mb-5"
+    >
       <div className="flex flex-col md:flex-row">
         <div className="md:w-1/4 flex p-3">
           <div
@@ -64,10 +69,13 @@ const ProductItem = ({ product }:{product:any}) => {
 
             <p className="text-green-500">ارسال رایگان</p>
             <div className="my-3">
-              <a className="px-4 py-2 inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 cursor-pointer">
+              <button
+                onClick={() => addToCart(product)}
+                className="px-4 py-2 inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 cursor-pointer"
+              >
                 {" "}
                 به سبد خرید اضافه کنید{" "}
-              </a>
+              </button>
             </div>
           </div>
         </div>

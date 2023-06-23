@@ -4,11 +4,11 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: React.ReactNode;
 }
 
-const Button: FC<Props> = ({ onClick, label }) => {
+const Button: FC<Props> = ({ label,className, ...otherProps }) => {
   return (
     <button
-      className="px-4 py-2 inline-block border border-transparent bg-blue-600 text-white rounded-md hover:bg-blue-700"
-      onClick={onClick}
+      className={`${className}  px-4 py-2 inline-block border border-transparent bg-blue-600 text-white rounded-md hover:bg-blue-700`}
+      {...otherProps}
     >
       {label}
     </button>

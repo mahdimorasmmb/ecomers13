@@ -1,27 +1,79 @@
-"use client";
-
-import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect, useLayoutEffect } from "react";
+import { useState } from "react";
 import StarRatings from "react-star-ratings";
 
+const checkboxes = [
+  {
+    name: "category",
+    value: "Electronics",
+    label: "الکترونیک",
+  },
+  {
+    name: "category",
+    value: "Laptops",
+    label: "لپ تاپ ها",
+  },
+  {
+    name: "category",
+    value: "Toys",
+    label: "اسباب بازی",
+  },
+  {
+    name: "category",
+    value: "Office",
+    label: "دفتر",
+  },
+  {
+    name: "category",
+    value: "Beauty",
+    label: "محصولات زیبایی ",
+  },
+];
+
 const Filters = () => {
-  const router = useSearchParams()
-  let queryParams:URLSearchParams
- 
-  
+  const [min, setMin] = useState("");
+  const [max, setMax] = useState("");
+  const [valueCheckbox, setvalueCheckbox] = useState<{
+    [key: string]: string | number;
+  }>({});
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  let queryParams = new URLSearchParams(searchParams.toString());
 
-  function checkHandler(checkBoxType:any, checkBoxValue:any) {
-    
-    if (typeof window !== "undefined") {
-      queryParams = new URLSearchParams(router.get('search') as string );
-    }
+  function handleClick(e: React.ChangeEvent<HTMLInputElement>) {
+    const name = e.target.name;
+    const newValue = { [name]: e.target.value };
+    setvalueCheckbox((prev) => {
+      if (prev[name] === newValue[name]) {
+        return { ...prev, [name]: "" };
+      }
+      return { ...prev, ...newValue };
+    });
+    if (queryParams.get(name) === newValue[name]) {
+      queryParams.delete(name);
 
-    if (typeof window !== "undefined") {
-      const value = queryParams.get(checkBoxType);
-      if (checkBoxValue === value) return true;
-      return false;
+      return router.push(`${pathname}?${queryParams.toString()}`);
     }
+    queryParams.set(name, newValue[name]);
+    return router.push(`${pathname}?${queryParams.toString()}`);
   }
+
+  function handleButton() {
+    queryParams.set("min", String(min));
+    queryParams.set("max", String(max));
+    router.push(`${pathname}?${queryParams.toString()}`);
+    console.log(queryParams.toString());
+    
+  }
+
+  useLayoutEffect(() => {
+    const value = queryParams.values();
+    console.log(value);
+
+    // value && setvalueCheckbox(value);
+  }, []);
 
   return (
     <aside dir="rtl" className="md:w-1/3 lg:w-1/4 px-4">
@@ -40,6 +92,7 @@ const Filters = () => {
               className="appearance-none border border-gray-200 bg-gray-100 rounded-md py-2 px-2 hover:border-gray-400 focus:outline-none focus:border-gray-400 w-full"
               type="number"
               placeholder="حداقل"
+              onChange={(e) => setMin(e.target.value)}
             />
           </div>
 
@@ -49,11 +102,15 @@ const Filters = () => {
               className="appearance-none border border-gray-200 bg-gray-100 rounded-md py-2 px-2 hover:border-gray-400 focus:outline-none focus:border-gray-400 w-full"
               type="number"
               placeholder="حداکثر"
+              onChange={(e) => setMax(e.target.value)}
             />
           </div>
 
           <div className="mb-4">
-            <button className="px-1 py-2 text-center w-full inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
+            <button
+              onClick={handleButton}
+              className="px-1 py-2 text-center w-full inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
+            >
               بگرد
             </button>
           </div>
@@ -64,66 +121,22 @@ const Filters = () => {
         <h3 className="font-semibold mb-2">دسته بندی</h3>
 
         <ul className="space-y-1">
-          <li>
-            <label className="flex items-center">
-              <input
-                name="category"
-                type="checkbox"
-                value="Electronics"
-                className="h-4 w-4"
-                defaultChecked={checkHandler("category", "Electronics")}
-              />
-              <span className="mr-2 text-gray-500"> الکترونیک </span>
-            </label>
-          </li>
-          <li>
-            <label className="flex items-center">
-              <input
-                name="category"
-                type="checkbox"
-                value="Laptops"
-                className="h-4 w-4"
-                defaultChecked={checkHandler("category", "Laptops")}
-              />
-              <span className="mr-2 text-gray-500"> لپ تاپ ها </span>
-            </label>
-          </li>
-          <li>
-            <label className="flex items-center">
-              <input
-                name="category"
-                type="checkbox"
-                value="Toys"
-                className="h-4 w-4"
-                defaultChecked={checkHandler("category", "Toys")}
-              />
-              <span className="mr-2 text-gray-500"> اسباب بازی </span>
-            </label>
-          </li>
-          <li>
-            <label className="flex items-center">
-              <input
-                name="category"
-                type="checkbox"
-                value="Office"
-                className="h-4 w-4"
-                defaultChecked={checkHandler("category", "Office")}
-              />
-              <span className="mr-2 text-gray-500"> دفتر </span>
-            </label>
-          </li>
-          <li>
-            <label className="flex items-center">
-              <input
-                name="category"
-                type="checkbox"
-                value="Beauty"
-                className="h-4 w-4"
-                defaultChecked={checkHandler("category", "Beauty")}
-              />
-              <span className="mr-2 text-gray-500"> محصولات زیبایی </span>
-            </label>
-          </li>
+          {checkboxes.map((item) => (
+            <li key={item.label}>
+              <label className="flex items-center">
+                <input
+                  name={item.name}
+                  type="checkbox"
+                  checked={item.value === valueCheckbox[item.name]}
+                  value={item.value}
+                  className="h-4 w-4"
+                  onChange={handleClick}
+                  // defaultChecked={item.value === valueCheckbox}
+                />
+                <span className="mr-2 text-gray-500"> {item.label} </span>
+              </label>
+            </li>
+          ))}
         </ul>
 
         <hr className="my-4" />
@@ -137,8 +150,10 @@ const Filters = () => {
                   name="ratings"
                   type="checkbox"
                   value={rating}
+                  checked={rating === valueCheckbox["ratings"]}
                   className="h-4 w-4"
-                  defaultChecked={checkHandler("ratings", `${rating}`)}
+                  onChange={handleClick}
+                  // defaultChecked={checkHandler("ratings", `${rating}`)}
                 />
                 <span className="ml-2 text-gray-500">
                   {" "}

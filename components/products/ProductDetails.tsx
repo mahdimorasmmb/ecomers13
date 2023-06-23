@@ -2,9 +2,11 @@
 
 import React, { useRef } from "react";
 import StarRatings from "react-star-ratings";
-import BreadCrumbs from "../layout/BreadCrumbs";
+import BreadCrumbs, { IBreadCrumbs } from "../layout/BreadCrumbs";
+import { useCartStore } from "@/store/cart";
 
-const ProductDetails = ({ product }: { product: any }) => {
+const ProductDetails = ({ product }: { product: Product }) => {
+  const addToCart = useCartStore((state) => state.addToCart);
   const imgRef = useRef<HTMLImageElement>(null);
 
   const setImgPreview = (url: any) => {
@@ -13,13 +15,17 @@ const ProductDetails = ({ product }: { product: any }) => {
 
   const inStock = product?.stock >= 1;
 
-  const breadCrumbs = [
+  const breadCrumbs: Array<IBreadCrumbs> = [
     { name: "صفحه اصلی", url: "/" },
     {
       name: `${product?.name?.substring(0, 100)} ...`,
       url: `/products/${product?._id}`,
     },
   ];
+
+  const addToCartHandler = () => {
+    addToCart(product);
+  };
   return (
     <>
       <BreadCrumbs breadCrumbs={breadCrumbs} />
@@ -42,8 +48,9 @@ const ProductDetails = ({ product }: { product: any }) => {
                 />
               </div>
               <div className="space-x-2 overflow-auto text-center whitespace-nowrap">
-                {product?.images?.map((img:any) => (
+                {product?.images?.map((img: any) => (
                   <a
+                    key={img.url}
                     className="inline-block border border-gray-200 p-1 rounded-md hover:border-blue-500 cursor-pointer"
                     onClick={() => setImgPreview(img?.url)}
                   >
@@ -91,7 +98,7 @@ const ProductDetails = ({ product }: { product: any }) => {
               <p className="mb-4 text-gray-500">{product?.description}</p>
 
               <div className="flex flex-wrap gap-2 mb-5">
-                <button className="px-4 py-2 inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
+                <button onClick={addToCartHandler} className="px-4 py-2 inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
                   <i className="fa fa-shopping-cart mr-2"></i>
                   به سبد خرید اضافه کنید
                 </button>
@@ -115,7 +122,7 @@ const ProductDetails = ({ product }: { product: any }) => {
                 <li className="mb-1">
                   {" "}
                   <b className="font-medium w-36 inline-block">
-                  فروشنده / برند:
+                    فروشنده / برند:
                   </b>
                   <span className="text-gray-500">{product?.seller}</span>
                 </li>
@@ -128,7 +135,7 @@ const ProductDetails = ({ product }: { product: any }) => {
 
           <div className="font-semibold">
             <h1 className="text-gray-500 review-title mb-6 mt-10 text-2xl">
-            نظرات دیگر مشتریان
+              نظرات دیگر مشتریان
             </h1>
             {/* <Reviews /> */}
           </div>
