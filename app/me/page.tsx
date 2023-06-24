@@ -26,6 +26,8 @@ const getAddresses = async () => {
 };
 
 const Page = async () => {
+  console.log('render server//////////////////////////////////////////');
+  
   const data = await getAddresses();
   return <Profile dataAddresses={data.address} />;
 };

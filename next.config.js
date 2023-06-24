@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  disableManifest: true,
+  cacheBust: true,
   env: {
     NEXTAUTH_SECRET: "mahdimoras",
     API_URL: "http://localhost:3000",
