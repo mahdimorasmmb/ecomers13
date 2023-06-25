@@ -7,7 +7,7 @@ const nextConfig = {
   cacheBust: true,
   env: {
     NEXTAUTH_SECRET: "mahdimoras",
-    API_URL: "http://127.0.0.1:3000",
+    API_URL: "https://127.0.0.1:3000",
     DB_URL:
       "mongodb+srv://mahdimoras:zSzXyKpLob8uifNd@cluster0.8r5zn0r.mongodb.net/?retryWrites=true&w=majority",
   },
