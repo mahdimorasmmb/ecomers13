@@ -10,6 +10,7 @@ import { useForm, Controller } from "react-hook-form";
 import { postData } from "@/tools/api";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import FormItem from "../FormItem";
 
 interface Props {
   address?: Address;
@@ -60,7 +61,6 @@ const NewAddress = ({ address }: Props) => {
   };
 
   const handleDeletedAddress = async () => {
-    
     const res = await fetch(
       `${process.env.API_URL}/api/address/${address?._id}`,
       {
@@ -152,18 +152,20 @@ const NewAddress = ({ address }: Props) => {
             )}
           />
 
-          <Controller
-            name={"country"}
-            control={control}
-            render={({ field }) => (
-              <Select options={countriesList || []} label="کشور" {...field} />
-            )}
-          />
+          <FormItem label="کشور">
+            <Controller
+              name={"country"}
+              control={control}
+              render={({ field }) => (
+                <Select {...field} options={countriesList || []} />
+              )}
+            />
+          </FormItem>
         </div>
         <div className="flex gap-4">
           {address && (
             <Button
-          type="button"
+              type="button"
               className="w-full bg-red-500 hover:bg-red-800 mt-5"
               onClick={handleDeletedAddress}
               label="حذف کردن"

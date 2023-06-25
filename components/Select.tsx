@@ -1,39 +1,30 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 
 export type Option = {
   value: string;
   label: string;
 };
 
-interface SelectProps extends React.ButtonHTMLAttributes<HTMLSelectElement> {
+interface SelectProps extends React.InputHTMLAttributes<HTMLSelectElement> {
   options: Option[];
-  label?: React.ReactNode;
-  warperClassName?: string;
-  labelClassName?: string;
 }
 
-const Select = ({
+const Select: FC<SelectProps> = ({
   options,
-  label,
-  warperClassName,
-  labelClassName,
   className,
   ...otherProps
-}: SelectProps) => {
+}) => {
   return (
-    <div className={`${warperClassName}`}>
-      <label className={`block mb-1 ${labelClassName}`}> {label} </label>
-      <select
-        className={`${className} appearance-none border border-gray-200 bg-gray-100 rounded-md py-2 px-3 hover:border-gray-400 focus:outline-none focus:border-gray-400 w-full `}
-        {...otherProps}
-      >
-        {options.map((country) => (
-          <option key={country.value} value={country.value}>
-            {country.label}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select
+      className={`${className} appearance-none border border-gray-200 bg-gray-100 rounded-md py-2 px-3 hover:border-gray-400 focus:outline-none focus:border-gray-400 w-full `}
+      {...otherProps}
+    >
+      {options.map((country) => (
+        <option  key={country.value} value={country.value}>
+          {country.label}
+        </option>
+      ))}
+    </select>
   );
 };
 
