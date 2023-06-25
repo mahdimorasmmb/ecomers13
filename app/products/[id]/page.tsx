@@ -11,10 +11,11 @@ const getProductDetails = async (id:string) => {
   const response = await fetch(`${process.env.API_URL}/api/products/${id}`, {
     cache: "no-store",
   });
+  const data = await response.json()
   if (!response.ok) {
-    throw new Error(response.statusText);
+    throw new Error(data.message);
   }
-  return (await response.json()) as Promise<Result>;
+  return (data) as Promise<Result>;
 };
 
 const Page = async ({ params }: { params: any }) => {

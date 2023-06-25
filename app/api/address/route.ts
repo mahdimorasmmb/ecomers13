@@ -4,12 +4,13 @@ import { NextResponse } from "next/server";
 import errorhan from "@/backend/middlewares/error";
 import isAuthenticatedUser from "@/backend/middlewares/auth";
 import getUser_id from "@/backend/utils/getUser_id";
+import { connectDb } from "@/backend/config/db";
 
 export async function POST(req: Request) {
   try {
     await isAuthenticatedUser(req);
 
-    await db.connect();
+    await connectDb();
     const body: Address = await req.json();
 
     const address = await Address.create({ ...body, user: getUser_id(req) });
@@ -27,7 +28,7 @@ export async function GET(req: Request) {
   try {
     await isAuthenticatedUser(req);
 
-    await db.connect();
+    await connectDb();
     const address = await Address.find({ user: getUser_id(req) });
 
     return NextResponse.json({ address }, { status: 200 });

@@ -4,6 +4,7 @@ import { Error } from "mongoose";
 import { NextResponse } from "next/server";
 import errorMiddleware from "@/backend/middlewares/error";
 import { getSession } from "next-auth/react";
+import { connectDb } from "@/backend/config/db";
 
 interface RequestBody {
   name: string;
@@ -13,7 +14,7 @@ interface RequestBody {
 
 export async function POST(requset: Request) {
   try {
-    await db.connect();
+    await connectDb();
     const body: RequestBody = await requset.json();
     
     // if (!body) return NextResponse.json({ error: "insert" }, { status: 400 });

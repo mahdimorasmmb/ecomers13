@@ -3,6 +3,7 @@ import User from "@/backend/models/user";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import errorMiddleware from "@/backend/middlewares/error"
+import { connectDb } from "@/backend/config/db";
 
 interface RequestBody {
   email: string;
@@ -11,8 +12,8 @@ interface RequestBody {
 
 export async function POST(req: Request) {
   try {
-    await db.connect();
-    const body: RequestBody = await req.json();
+    await connectDb();   
+     const body: RequestBody = await req.json();
 
     const user = await User.findOne({ email: body?.email }).select("+password");
 

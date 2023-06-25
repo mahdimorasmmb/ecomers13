@@ -12,18 +12,26 @@ export interface ProductDataResponse {
 const getProducts = async (searchParams?: {
   [key: string]: string | string[] | undefined;
 }) => {
-  const url = {
-    ["category"]: searchParams && searchParams["category"],
-    ["page"]: searchParams && searchParams["page"],
-    ["ratings[gte]"]: searchParams && searchParams["ratings"],
-    ["price[gte]"]: searchParams && searchParams["min"],
-    ["price[lte]"]: searchParams && searchParams["max"],
-    ["name"]: searchParams && searchParams["name"],
-  };
-  const queryString = searchParams && getQueryStrings(url);
+  
+    const url = {
+      ["category"]: searchParams && searchParams["category"],
+      ["page"]: searchParams && searchParams["page"],
+      ["ratings[gte]"]: searchParams && searchParams["ratings"],
+      ["price[gte]"]: searchParams && searchParams["min"],
+      ["price[lte]"]: searchParams && searchParams["max"],
+      ["name"]: searchParams && searchParams["name"],
+    };
+    const queryString = searchParams && getQueryStrings(url);
+    const response = await fetch(
+      `${process.env.API_URL}/api/products?${queryString}`
+    );
+    const data = await response.json()
 
-  const data = await api<ProductDataResponse>(`api/products?${queryString}`,{});
-  return data;
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data as Promise<ProductDataResponse>;
+  
 };
 
 export default async function Home({

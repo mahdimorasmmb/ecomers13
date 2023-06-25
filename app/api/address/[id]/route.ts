@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import errorhan from "@/backend/middlewares/error";
 import isAuthenticatedUser from "@/backend/middlewares/auth";
 import ErrorHandler from "@/backend/utils/errorHandler";
+import { connectDb } from "@/backend/config/db";
 
 export async function GET(
   req: Request,
@@ -15,7 +16,7 @@ export async function GET(
 ) {
   try {
     await isAuthenticatedUser(req);
-    await db.connect();
+    await connectDb();
     const address = await Address.findById(context.params.id);
 
     if (!address) throw new ErrorHandler("Address not found", 404);
@@ -37,7 +38,7 @@ export async function PATCH(
   try {
     await isAuthenticatedUser(req);
 
-    await db.connect();
+    await connectDb();
     const body: Address = await req.json();
 
     let address = await Address.findById(context.params.id);
@@ -64,7 +65,7 @@ export async function DELETE(
   try {
     await isAuthenticatedUser(req);
 
-    await db.connect();
+    await connectDb();
 
     let address = await Address.findById(context.params.id);
 
