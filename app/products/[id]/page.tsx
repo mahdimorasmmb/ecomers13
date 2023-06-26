@@ -1,3 +1,4 @@
+import { baseUrl } from "@/app/page";
 import ProductDetails from "@/components/products/ProductDetails";
 import api from "@/tools/api";
 import axios from "axios";
@@ -8,7 +9,7 @@ interface Result {
 }
 
 const getProductDetails = async (id:string) => {
-  const response = await fetch(`${process.env.API_URL}/api/products/${id}`, {
+  const response = await fetch(`${baseUrl}/api/products/${id}`, {
     cache: "no-store",
   });
   const data = await response.json()

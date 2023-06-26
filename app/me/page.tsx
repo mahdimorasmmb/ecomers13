@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { getToken } from "next-auth/jwt";
 import { cookies } from "next/headers";
 import React, { Suspense } from "react";
+import { baseUrl } from "../page";
 
 interface Data {
   address: [Address];
@@ -13,7 +14,7 @@ const getAddresses = async () => {
   const nextCookies = cookies();
   const nextAuthSessionToken = nextCookies.get("next-auth.session-token");
 
-  const response = await fetch(`${process.env.API_URL}/api/address`, {
+  const response = await fetch(`${baseUrl}/api/address`, {
     cache: "no-store",
     headers: {
       Cookie: `${nextAuthSessionToken?.name}=${nextAuthSessionToken?.value}`,
