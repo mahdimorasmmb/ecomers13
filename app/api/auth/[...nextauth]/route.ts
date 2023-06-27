@@ -1,4 +1,4 @@
-import { baseUrl } from "@/app/page";
+
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 const handler = NextAuth({
@@ -28,7 +28,7 @@ const handler = NextAuth({
   providers: [
     CredentialsProvider({
       async authorize(credentials, req) {
-        const res = await fetch(`${baseUrl}/api/login`, {
+        const res = await fetch(`${process.env.API_URL}/api/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -9,7 +9,7 @@ export interface ProductDataResponse {
   productCount: number;
 }
 
-export const baseUrl = process.env.NODE_ENV === 'development' ? process.env.API_URL : ''
+
 
 const getProducts = async (searchParams?: {
   [key: string]: string | string[] | undefined;
@@ -25,7 +25,7 @@ const getProducts = async (searchParams?: {
     };
     const queryString = searchParams && getQueryStrings(url);
     const response = await fetch(
-      `${baseUrl}/api/products?${queryString}`
+      `${process.env.API_URL}/api/products?${queryString}`
     );
     const data = await response.json()
 
