@@ -1,6 +1,7 @@
-'use client'
+"use client";
 
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import React from "react";
 
 interface Props {
@@ -10,11 +11,17 @@ interface Props {
 
 const Avatar = ({ imageSrc, alt }: Props) => {
   const { data } = useSession();
+
+  const src =
+    typeof window === "undefined" ? imageSrc : data?.user?.avatar?.url;
+
   return (
-    <img
-      className="w-16 h-16 rounded-full mr-4"
-      src={imageSrc || data?.user?.avatar?.url || "/images/default.png "}
+    <Image
+      className=" rounded-full mr-4"
+      src={src || "/images/default.png "}
       alt={alt || data?.user?.name || "profile"}
+      width={64}
+      height={64}
     />
   );
 };

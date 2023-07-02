@@ -4,5 +4,5 @@ export default withAuth(async function middleware(req) {});
 
 
 export const config = {
-    matcher:['/me']
+    matcher:['/me:path*']
 }

@@ -5,10 +5,11 @@ import { getToken } from "next-auth/jwt";
 import { cookies } from "next/headers";
 import React, { Suspense } from "react";
 
-
 interface Data {
   address: [Address];
 }
+
+export const revalidate = 0;
 
 const getAddresses = async () => {
   const nextCookies = cookies();
@@ -27,8 +28,6 @@ const getAddresses = async () => {
 };
 
 const Page = async () => {
-  console.log('render server//////////////////////////////////////////');
-  
   const data = await getAddresses();
   return <Profile dataAddresses={data.address} />;
 };

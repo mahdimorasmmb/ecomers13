@@ -10,6 +10,7 @@ interface Props {
 
 const InfoProfile = ({ session }: Props) => {
   const { data } = useSession();
+  
   return (
     <figcaption className="mr-2">
       <h5 className="font-semibold text-lg">

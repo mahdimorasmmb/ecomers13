@@ -1,25 +1,34 @@
-
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-const handler = NextAuth({
+import User from "@/backend/models/user";
+import { NextAuthOptions } from "next-auth";
+
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ user, token }: any) {
+    async jwt({ user, token, trigger }: any) {
       if (user) {
         token.user = user;
       }
 
+      if (trigger === "update") {
+        console.log(trigger);
+        const updateUser = await User.findById(token.user._id);
+
+        console.log({ updateUser });
+
+        token.user = updateUser;
+      }
+
       return token;
     },
-    
 
-    session({ session, token }) {
+    async session({ session, token, trigger }) {
       const user = token.user as User;
 
       session.user = user;
-
       session.user.password = "";
       return session;
     },
@@ -62,8 +71,8 @@ const handler = NextAuth({
     signIn: "/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
-
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

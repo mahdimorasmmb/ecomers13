@@ -5,6 +5,7 @@ import errorMiddleware from "@/backend/middlewares/error";
 import { Query } from "mongoose";
 import { NextResponse } from "next/server";
 import { connectDb } from "@/backend/config/db";
+import { cloudinary } from "@/backend/utils/cloudinary";
 
 interface ProductDocument extends Document {
   // Define the properties of the Product document
@@ -27,6 +28,8 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
+
+   
     await connectDb();
     const resPerPage = 3;
     const productCount = await Product.countDocuments();

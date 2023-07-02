@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 import Head from "next/head";
 import Provider from "@/components/auth/Provider";
 import { getServerSession } from "next-auth";
+import { getSession } from "next-auth/react";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 const yekanFont = localFont({
   src: "./font/Yekan.woff2",
@@ -20,7 +22,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang="en">

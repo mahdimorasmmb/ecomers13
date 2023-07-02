@@ -1,21 +1,23 @@
 import React from "react";
 import Link from "next/link";
 
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import UserAddresses from "../user/UserAddress";
 import Avatar from "../Avatar";
 import Button from "../Button";
 import InfoProfile from "./InfoProfile";
 import { getServerSession } from "next-auth";
+import { getToken } from "next-auth/jwt";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 interface Props {
   dataAddresses: [Address];
 }
 
 const Profile = async ({ dataAddresses }: Props) => {
-  const dataUser = await getServerSession();
+  const dataUser = await getServerSession(authOptions);
 
-  return  (
+  return (
     <div>
       <figure dir="rtl" className="flex items-start sm:items-center">
         <div className="relative">

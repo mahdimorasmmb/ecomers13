@@ -13,11 +13,14 @@ interface Props {
 }
 const Header: FC<Props> = ({ session }) => {
   const totalItems = useCartStore((state) => state.totalItems);
-  const clientSession = useSession()
-  const user = session ? session.user as User : clientSession.data?.user as User
-
-  console.log({clientSession});
-  
+  const clientSession = useSession();
+  undefined;
+  const user =
+    typeof window === "undefined"
+      ? session
+        ? (session.user as User)
+        : (clientSession.data?.user as User)
+      : (clientSession.data?.user as User);
   return (
     <header dir="rtl" className="bg-white py-2 border-b">
       <div className="container max-w-screen-xl mx-auto px-4">

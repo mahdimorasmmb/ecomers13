@@ -1,3 +1,4 @@
+import { cloudinary } from "@/backend/utils/cloudinary";
 import ListProducts from "@/components/products/ListProducts";
 import api from "@/tools/api";
 import getQueryStrings from "@/tools/getQueryStrings";
@@ -42,6 +43,8 @@ export default async function Home({
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   const productsData = await getProducts(searchParams);
+
+  
 
   return (
     <main>

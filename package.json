@@ -16,13 +16,17 @@
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.37.3",
     "countries-list": "^2.6.1",
     "cross-env": "^7.0.3",
     "daisyui": "^2.51.6",
+    "date-fns": "^2.30.0",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
+    "mime": "^3.0.0",
     "mongodb": "^5.6.0",
     "mongoose": "^7.2.0",
+    "multer": "^1.4.5-lts.1",
     "next": "13.4.7",
     "next-auth": "^4.22.1",
     "next-connect": "1.0.0-next.4",
@@ -39,6 +43,7 @@
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
     "@types/bcryptjs": "^2.4.2",
+    "@types/multer": "^1.4.7",
     "@types/react-star-ratings": "^2.3.0"
   }
 }
