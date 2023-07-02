@@ -1,15 +1,10 @@
 import Profile from "@/components/auth/Profile";
-import api from "@/tools/api";
-import { getServerSession } from "next-auth";
-import { getToken } from "next-auth/jwt";
 import { cookies } from "next/headers";
 import React, { Suspense } from "react";
 
 interface Data {
   address: [Address];
 }
-
-export const revalidate = 0;
 
 const getAddresses = async () => {
   const nextCookies = cookies();
@@ -27,9 +22,7 @@ const getAddresses = async () => {
     throw new Error(data.message);
   }
 
-  console.log();
-
-  return (await response.json()) as Promise<Data>;
+  return data as Promise<Data>;
 };
 
 const Page = async () => {
