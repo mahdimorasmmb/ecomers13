@@ -21,9 +21,14 @@ const getAddresses = async () => {
       Cookie: `${nextAuthSessionToken?.name}=${nextAuthSessionToken?.value}`,
     },
   });
+
+  const data = await response.json();
   if (!response.ok) {
-    throw new Error(response.statusText);
+    throw new Error(data.message);
   }
+
+  console.log();
+
   return (await response.json()) as Promise<Data>;
 };
 
