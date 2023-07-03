@@ -5,7 +5,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const isAuthenticatedUser = async (requset: Request) => {
   const session = await getServerSession(authOptions);
-  
+  console.log(session);
+
   if (!session) {
     throw new ErrorHandler("Login first to access this route", 404);
   }
