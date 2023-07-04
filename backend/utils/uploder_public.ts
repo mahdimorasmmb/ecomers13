@@ -11,6 +11,8 @@ const uploderInPublic = async (file: Blob) => {
 
   const relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
   const uploadDir = join(process.cwd(), "public", relativeUploadDir);
+  console.log(uploadDir);
+  
 
   try {
     await stat(uploadDir);
