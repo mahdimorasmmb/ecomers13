@@ -1,33 +1,31 @@
 import Profile from "@/components/auth/Profile";
+import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
-import React, { Suspense } from "react";
+import React, { Suspense, cache } from "react";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import AddressModel from "@/backend/models/address";
+import { connectDb } from "@/backend/config/db";
 
 interface Data {
   address: [Address];
+  
 }
 
+
+
 const getAddresses = async () => {
-  const nextCookies = cookies();
-  const nextAuthSessionToken = nextCookies.get("next-auth.session-token");
+  const session = await getServerSession(authOptions);
 
-  const response = await fetch(`${process.env.API_URL}/api/address`, {
-    cache: "no-store",
-    headers: {
-      Cookie: `${nextAuthSessionToken?.name}=${nextAuthSessionToken?.value}`,
-    },
-  });
+  await connectDb();
 
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.message);
-  }
+  const address = await AddressModel.find({ user: session?.user._id });
 
-  return data as Promise<Data>;
+  return address as [Address];
 };
 
 const Page = async () => {
-  const data = await getAddresses();
-  return <Profile dataAddresses={data.address} />;
+  const address = await getAddresses();
+  return <Profile dataAddresses={address} />;
 };
 
 export default Page;

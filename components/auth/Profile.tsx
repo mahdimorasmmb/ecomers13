@@ -10,6 +10,8 @@ import { getServerSession } from "next-auth";
 import { getToken } from "next-auth/jwt";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+export const fetchCache = 'force-no-store'
+
 interface Props {
   dataAddresses: [Address];
 }

@@ -30,7 +30,7 @@ const NewAddress = ({ address }: Props) => {
   const submitHandler = async (value: any) => {
     if (address) {
       const res = await fetch(
-        `${process.env.API_URL}/api/address/${address._id}`,
+        `/api/address/${address._id}`,
         {
           method: "PATCH",
           body: JSON.stringify(value),
@@ -45,7 +45,7 @@ const NewAddress = ({ address }: Props) => {
 
       router.refresh();
     } else {
-      const res = await fetch(`${process.env.API_URL}/api/address`, {
+      const res = await fetch(`/api/address`, {
         method: "POST",
         body: JSON.stringify(value),
       });
@@ -55,14 +55,15 @@ const NewAddress = ({ address }: Props) => {
       if (!res.ok) return toast.error(data.message);
 
       toast.success(data.message);
-
-      router.push("/me");
+      
+      router.refresh();
+      router.replace("/me");
     }
   };
 
   const handleDeletedAddress = async () => {
     const res = await fetch(
-      `${process.env.API_URL}/api/address/${address?._id}`,
+      `/api/address/${address?._id}`,
       {
         method: "DELETE",
       }
@@ -73,7 +74,7 @@ const NewAddress = ({ address }: Props) => {
     if (!res.ok) return toast.error(data.message);
 
     toast.success(data.message);
-
+    router.refresh()
     router.replace("/me");
   };
 

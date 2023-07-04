@@ -39,6 +39,7 @@ const UpdateProfile = () => {
 
       toast.success(res.data.message);
       await update();
+      router.refresh();
       router.push("/me");
     } catch (error) {
       if (error instanceof AxiosError) {

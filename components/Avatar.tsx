@@ -12,8 +12,7 @@ interface Props {
 const Avatar = ({ imageSrc, alt }: Props) => {
   const { data } = useSession();
 
-  const src =
-    typeof window === "undefined" ? imageSrc : data?.user?.avatar?.url;
+  const src = imageSrc || data?.user?.avatar?.url;
 
   return (
     <Image
