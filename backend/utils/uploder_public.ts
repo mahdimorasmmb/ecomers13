@@ -10,15 +10,24 @@ const uploderInPublic = async (file: Blob) => {
   const buffer = Buffer.from(await file.arrayBuffer());
 
   const relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
-  const uploadDir = join(process.cwd(), "public", relativeUploadDir);
-  console.log(uploadDir,'================================================');
+
+  let tempraryImageDirectory: string;
+  if (process.env.DEV && process.env.DEV === "Yes") {
+    tempraryImageDirectory = join(process.cwd(), "public", relativeUploadDir);
+  } else {
+    tempraryImageDirectory = "/tmp/";
+  }
+  // const uploadDir = join(process.cwd(), "public", relativeUploadDir);
+  console.log(
+    tempraryImageDirectory,
+    "================================================"
+  );
 
   try {
-  await stat(uploadDir);
-  
+    await stat(tempraryImageDirectory);
   } catch (e: any) {
     if (e.code === "ENOENT") {
-      await mkdir(uploadDir, { recursive: true });
+      await mkdir(tempraryImageDirectory, { recursive: true });
     } else {
       console.error(
         "Error while trying to create directory when uploading a file\n",
@@ -34,13 +43,18 @@ const uploderInPublic = async (file: Blob) => {
       /\.[^/.]+$/,
       ""
     )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
-    const url = await writeFile(`${uploadDir}/${filename}`, buffer);
+    const url = await writeFile(
+      `${tempraryImageDirectory}/${filename}`,
+      buffer
+    );
     console.log(url, "++++++++++++++++++++++++++++++++++++++++++++");
 
     const uploader = async (path: string) =>
       await uploadImage(path, "/buyitnow/avatars");
 
-    const avatarResponse = await uploader(`${uploadDir}/${filename}`);
+    const avatarResponse = await uploader(
+      `${tempraryImageDirectory}/${filename}`
+    );
     return { ...avatarResponse };
   } catch (e) {
     console.error("Error while trying to upload a file\n", e);
