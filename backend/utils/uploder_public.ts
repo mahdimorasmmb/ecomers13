@@ -11,11 +11,11 @@ const uploderInPublic = async (file: Blob) => {
 
   const relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
   const uploadDir = join(process.cwd(), "public", relativeUploadDir);
-  console.log(uploadDir);
-  
+  console.log(uploadDir,'================================================');
 
   try {
-    await stat(uploadDir);
+  await stat(uploadDir);
+  
   } catch (e: any) {
     if (e.code === "ENOENT") {
       await mkdir(uploadDir, { recursive: true });
@@ -34,7 +34,9 @@ const uploderInPublic = async (file: Blob) => {
       /\.[^/.]+$/,
       ""
     )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
-    await writeFile(`${uploadDir}/${filename}`, buffer);
+    const url = await writeFile(`${uploadDir}/${filename}`, buffer);
+    console.log(url, "++++++++++++++++++++++++++++++++++++++++++++");
+
     const uploader = async (path: string) =>
       await uploadImage(path, "/buyitnow/avatars");
 
