@@ -1,7 +1,5 @@
 import errorMiddleware from "@/backend/middlewares/error";
-import mime from "mime";
-import { join } from "path";
-import { stat, mkdir, writeFile } from "fs/promises";
+
 import * as dateFn from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
 import ErrorHandler from "@/backend/utils/errorHandler";
