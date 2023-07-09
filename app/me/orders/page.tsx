@@ -14,6 +14,8 @@ const getOrders = async (searchParams: { [key: string]: string }) => {
   const nextCookies = cookies();
   const nextAuthSessionToken = nextCookies.get("next-auth.session-token");
 
+  console.log(`${nextAuthSessionToken?.name}=${nextAuthSessionToken?.value}`);
+  
   const url = {
     ["page"]: searchParams && searchParams["page"],
     ["name"]: searchParams && searchParams["name"],
