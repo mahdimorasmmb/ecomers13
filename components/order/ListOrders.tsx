@@ -7,7 +7,7 @@ import Pagination from "../layout/Pagination";
 import OrderItem from "./OrderItem";
 import { useCartStore } from "@/store/cart";
 
-const ListOrders = ({ orders }) => {
+const ListOrders = ({ orders }:{orders:any}) => {
   const clearCart = useCartStore((state) => state.clearCart);
   const params = useSearchParams();
   const router = useRouter();
@@ -24,7 +24,7 @@ const ListOrders = ({ orders }) => {
   return (
     <>
       <h3 className="text-xl font-semibold mb-5">Your Orders</h3>
-      {orders?.orders?.map((order) => (
+      {orders?.orders?.map((order:any) => (
         <OrderItem key={order.id} order={order} />
       ))}
 
