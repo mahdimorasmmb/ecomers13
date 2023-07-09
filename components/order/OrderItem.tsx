@@ -1,8 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-const OrderItem = ({ order }) => {
-  console.log(order);
+const OrderItem = ({ order }:{order:any}) => {
   return (
     <article className="p-3 lg:p-5 mb-5 bg-white border border-blue-600 rounded-md">
       <header className="lg:flex justify-between mb-4">
@@ -57,7 +56,7 @@ const OrderItem = ({ order }) => {
       <hr className="my-4" />
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {order?.orderItems?.map((item) => (
+        {order?.orderItems?.map((item:any) => (
           <figure key={item._id} className="flex flex-row mb-4">
             <div>
               <div className="block w-20 h-20 rounded border border-gray-200 overflow-hidden p-3">
