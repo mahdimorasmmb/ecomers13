@@ -17,6 +17,7 @@ interface Actions {
   addToCart: (Item: Product) => void;
   removeFromCart: (Item: CartProduct) => void;
   decreaseCart: (Item: Product) => void;
+  clearCart:() => void
 }
 
 // Initialize a default state
@@ -77,6 +78,13 @@ export const useCartStore = create<State & Actions>()(
           }));
         }
       },
+      clearCart() {
+        set((state) => ({
+          cart: [],
+          totalItems: 0,
+          totalPrice:0,
+        }));
+      },
       removeFromCart: (product) => {
         set((state) => ({
           cart: state.cart.filter((item) => item._id !== product._id),
@@ -87,7 +95,6 @@ export const useCartStore = create<State & Actions>()(
     }),
     {
       name: "cart",
-      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );

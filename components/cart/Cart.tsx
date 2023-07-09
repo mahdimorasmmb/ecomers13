@@ -4,6 +4,7 @@ import React from "react";
 
 import Link from "next/link";
 import { useCartStore } from "@/store/cart";
+import Image from "next/image";
 
 const Cart = () => {
   const {
@@ -42,7 +43,9 @@ const Cart = () => {
                           <figure className="flex leading-5">
                             <div>
                               <div className="block  w-16 h-16 rounded border border-gray-200 overflow-hidden">
-                                <img
+                                <Image
+                                  width={100}
+                                  height={100}
                                   src={cartItem.images[0]?.url}
                                   alt={cartItem.name}
                                 />
@@ -74,7 +77,7 @@ const Cart = () => {
                             </button>
                             <input
                               type="number"
-                              className="outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-900  outline-none custom-input-number"
+                              className=" focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-900  outline-none custom-input-number"
                               name="custom-input-number"
                               value={cartItem.quantity}
                               readOnly
@@ -139,9 +142,12 @@ const Cart = () => {
                     </li>
                   </ul>
 
-                  <a className="px-4 py-3 mb-2 inline-block text-lg w-full text-center font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 cursor-pointer">
+                  <Link
+                    href="/shipping"
+                    className="px-4 py-3 mb-2 inline-block text-lg w-full text-center font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 cursor-pointer"
+                  >
                     ادامه
-                  </a>
+                  </Link>
 
                   <Link
                     href="/"

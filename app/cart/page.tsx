@@ -1,10 +1,9 @@
-import Cart from '@/components/cart/Cart'
-import React from 'react'
+import dynamic from "next/dynamic";
+import React from "react";
+const Cart = dynamic(() => import("@/components/cart/Cart"), { ssr: false });
 
 const Page = () => {
-  return (
-    <Cart/>
-  )
-}
+  return <Cart />;
+};
 
-export default Page
+export default Page;

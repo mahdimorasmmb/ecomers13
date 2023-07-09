@@ -6,6 +6,13 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import AddressModel from "@/backend/models/address";
 import { connectDb } from "@/backend/config/db";
 
+import dynamic from "next/dynamic";
+
+
+const Shipping = dynamic(() => import("@/components/cart/Shipping"),{
+  ssr:false,
+  
+})
 
 const getAddresses = async () => {
   const session = await getServerSession(authOptions);
@@ -18,8 +25,8 @@ const getAddresses = async () => {
 };
 
 const Page = async () => {
-  const address = await getAddresses();
-  return <Profile dataAddresses={address} />;
+  const addresses = await getAddresses();
+  return <Shipping addresses={addresses} />;
 };
 
 export default Page;
