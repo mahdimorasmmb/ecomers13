@@ -2,7 +2,7 @@ import React, { Suspense, cache } from "react";
 
 import ListOrders from "@/components/order/ListOrders";
 import getQueryStrings from "@/tools/getQueryStrings";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 export interface OrdersDataResponse {
   orders: any;
@@ -11,10 +11,9 @@ export interface OrdersDataResponse {
 }
 
 const getOrders = async (searchParams: { [key: string]: string }) => {
-  const nextCookies = cookies();
-  const nextAuthSessionToken = nextCookies.get("next-auth.session-token");
+  
 
-  console.log(`${nextAuthSessionToken?.name}=${nextAuthSessionToken?.value}`);
+  
   
   const url = {
     ["page"]: searchParams && searchParams["page"],
@@ -25,7 +24,7 @@ const getOrders = async (searchParams: { [key: string]: string }) => {
     `${process.env.API_URL}/api/orders/me?${queryString}`,
     {
       headers: {
-        Cookie: `${nextAuthSessionToken?.name}=${nextAuthSessionToken?.value}`,
+        cookie: headers().get('cookie') ?? ''
       },
     }
   );
