@@ -3,7 +3,7 @@ import Link from "next/link";
 import Pagination from "../layout/Pagination";
 
 
-const Products = ({ data }) => {
+const Products = ({ data }:{data:any}) => {
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <h1 className="text-3xl my-5 ml-4 font-bold">
@@ -27,7 +27,7 @@ const Products = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data?.products?.map((product) => (
+          {data?.products?.map((product:any) => (
             <tr key={product._id} className="bg-white">
               <td className="px-6 py-2">{product?.name}</td>
               <td className="px-6 py-2">{product?.stock}</td>
