@@ -11,10 +11,6 @@ export interface OrdersDataResponse {
 }
 
 const getOrders = async (searchParams: { [key: string]: string }) => {
-  
-
-  
-  
   const url = {
     ["page"]: searchParams && searchParams["page"],
     ["name"]: searchParams && searchParams["name"],
@@ -24,7 +20,7 @@ const getOrders = async (searchParams: { [key: string]: string }) => {
     `${process.env.API_URL}/api/orders/me?${queryString}`,
     {
       headers: {
-        cookie: headers().get('cookie') ?? ''
+        cookie: headers().get("cookie") ?? "",
       },
     }
   );

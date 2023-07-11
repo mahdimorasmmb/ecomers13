@@ -5,16 +5,14 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { NextRequest, NextResponse } from "next/server";
 import { getCsrfToken, getSession } from "next-auth/react";
 
-const isAuthenticatedUser = async (requset: any,role:string = 'user') => {
+const isAuthenticatedUser = async (requset: any, role?: string) => {
+  const session = await getServerSession(authOptions);
 
-  const session = await getServerSession(authOptions)
-  
   if (!session) {
     throw new ErrorHandler("Login first to access this route", 404);
   }
 
-  if(session?.user.role !== role) {
-  
+  if (role && session?.user.role !== role) {
     throw new ErrorHandler("You not Accese this route", 404);
   }
 

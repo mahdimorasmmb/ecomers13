@@ -20,7 +20,7 @@ const ListProducts: FC<Props> = ({ data }) => {
               <ProductItem key={product?._id} product={product} />
             ))}
             <Pagination
-              productCount={data.filteredProductsCount}
+              itemsCount={data.filteredProductsCount}
               resPerPage={data.resPerPage}
             />
           </main>

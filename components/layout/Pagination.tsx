@@ -5,10 +5,10 @@ import React, { FC } from "react";
 
 interface Props {
   resPerPage: number;
-  productCount: number;
+  itemsCount: number;
 }
 
-const Pagination: FC<Props> = ({ productCount, resPerPage }) => {
+const Pagination: FC<Props> = ({ itemsCount, resPerPage }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -16,7 +16,7 @@ const Pagination: FC<Props> = ({ productCount, resPerPage }) => {
   let page = searchParams.get("page") || 1;
   page = Number(page);
 
-  const totalPages = Math.ceil(productCount / resPerPage);
+  const totalPages = Math.ceil(itemsCount / resPerPage);
 
   const queryString = new URLSearchParams({ ...searchParams }.toString());
   const handlePageChange = (selectedPage: number) => {
@@ -35,7 +35,7 @@ const Pagination: FC<Props> = ({ productCount, resPerPage }) => {
       buttons.push(
         <button
           key={i}
-          className={`btn ${i === page ? "btn-active" : ""}`}
+          className={`btn text-white border-gray-500 border hover:bg-blue-700 bg-blue-600${i === page ? "btn-active bg-blue-700" : ""}`}
           onClick={() => handlePageChange(i)}
         >
           {i}
@@ -47,7 +47,7 @@ const Pagination: FC<Props> = ({ productCount, resPerPage }) => {
 
   return (
     <div className="flex mt-10 justify-center">
-      <div className="btn-group">{renderPaginationButtons()}</div>
+      <div className="btn-group ">{renderPaginationButtons()}</div>
     </div>
   );
 };
