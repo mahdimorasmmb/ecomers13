@@ -23,7 +23,7 @@ const ListOrders = ({ orders }:{orders:any}) => {
 
   return (
     <>
-      <h3 className="text-xl font-semibold mb-5">Your Orders</h3>
+      <h3 dir="rtl" className="text-xl font-semibold mb-5">سفارشات شما</h3>
       {orders?.orders?.map((order:any) => (
         <OrderItem key={order.id} order={order} />
       ))}

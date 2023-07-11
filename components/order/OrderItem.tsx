@@ -1,13 +1,16 @@
 import React from "react";
 import Image from "next/image";
 
-const OrderItem = ({ order }:{order:any}) => {
+const OrderItem = ({ order }: { order: any }) => {
   return (
-    <article className="p-3 lg:p-5 mb-5 bg-white border border-blue-600 rounded-md">
+    <article
+      dir="rtl"
+      className="p-3 lg:p-5 mb-5 bg-white border border-blue-600 rounded-md"
+    >
       <header className="lg:flex justify-between mb-4">
         <div className="mb-4 lg:mb-0">
           <p className="font-semibold">
-            <span>Order ID: {order?._id} </span>
+            <span>شماره سفارش: {order?._id} </span>
             {order?.orderStatus == "Processing" ? (
               <span className="text-red-500">
                 • {order?.orderStatus.toUpperCase()}
@@ -23,7 +26,7 @@ const OrderItem = ({ order }:{order:any}) => {
       </header>
       <div className="grid md:grid-cols-3 gap-2">
         <div>
-          <p className="text-gray-400 mb-1">Person</p>
+          <p className="text-gray-400 mb-1">شخص</p>
           <ul className="text-gray-600">
             <li>{order?.user?.name}</li>
             <li>Phone: {order?.shippingInfo?.phoneNo}</li>
@@ -31,7 +34,7 @@ const OrderItem = ({ order }:{order:any}) => {
           </ul>
         </div>
         <div>
-          <p className="text-gray-400 mb-1">Delivery address</p>
+          <p className="text-gray-400 mb-1">نشانی تحویل</p>
           <ul className="text-gray-600">
             <li>{order?.shippingInfo?.street}</li>
             <li>
@@ -42,13 +45,13 @@ const OrderItem = ({ order }:{order:any}) => {
           </ul>
         </div>
         <div>
-          <p className="text-gray-400 mb-1">Payment</p>
+          <p className="text-gray-400 mb-1">پرداخت</p>
           <ul className="text-gray-600">
             <li className="text-green-400">
               {order?.paymentInfo?.status?.toUpperCase()}
             </li>
-            <li>Tax paid: ${order?.paymentInfo?.taxPaid}</li>
-            <li>Total paid: ${order?.paymentInfo?.amountPaid}</li>
+            <li>مالیات پرداخت شده: ${order?.paymentInfo?.taxPaid}</li>
+            <li>جمع پرداختی: ${order?.paymentInfo?.amountPaid}</li>
           </ul>
         </div>
       </div>
@@ -56,7 +59,7 @@ const OrderItem = ({ order }:{order:any}) => {
       <hr className="my-4" />
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {order?.orderItems?.map((item:any) => (
+        {order?.orderItems?.map((item: any) => (
           <figure key={item._id} className="flex flex-row mb-4">
             <div>
               <div className="block w-20 h-20 rounded border border-gray-200 overflow-hidden p-3">

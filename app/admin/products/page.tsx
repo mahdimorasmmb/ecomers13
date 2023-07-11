@@ -1,4 +1,7 @@
+import { cloudinary } from "@/backend/utils/cloudinary";
+import Products from "@/components/admin/Products";
 import ListProducts from "@/components/products/ListProducts";
+import api from "@/tools/api";
 import getQueryStrings from "@/tools/getQueryStrings";
 
 export interface ProductDataResponse {
@@ -12,16 +15,13 @@ const getProducts = async (searchParams?: {
   [key: string]: string | string[] | undefined;
 }) => {
   const url = {
-    ["category"]: searchParams && searchParams["category"],
     ["page"]: searchParams && searchParams["page"],
-    ["ratings[gte]"]: searchParams && searchParams["ratings"],
-    ["price[gte]"]: searchParams && searchParams["min"],
-    ["price[lte]"]: searchParams && searchParams["max"],
-    ["name"]: searchParams && searchParams["name"],
   };
   const queryString = searchParams && getQueryStrings(url);
   const response = await fetch(
-    `${process.env.API_URL}/api/products?${queryString}`
+    `${process.env.API_URL}/api/products?${queryString}`,{
+      cache:'no-store'
+    }
   );
   const data = await response.json();
 
@@ -37,9 +37,10 @@ export default async function Home({
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   const productsData = await getProducts(searchParams);
+
   return (
     <main>
-      <ListProducts data={productsData} />
+      <Products data={productsData} />
     </main>
   );
 }

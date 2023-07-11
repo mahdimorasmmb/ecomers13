@@ -1,7 +1,12 @@
+"use client";
+
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import StarRatings from "react-star-ratings";
+import Input from "../Input";
+import Button from "../Button";
+import { toast } from "react-toastify";
 
 const checkboxes = [
   {
@@ -44,7 +49,9 @@ const Filters = () => {
 
   function handleClick(e: React.ChangeEvent<HTMLInputElement>) {
     const name = e.target.name;
-    const newValue = { [name]: e.target.value };
+    const value = e.target.value
+    const newValue = { [name]: value };
+
     setvalueCheckbox((prev) => {
       if (prev[name] === newValue[name]) {
         return { ...prev, [name]: "" };
@@ -56,27 +63,30 @@ const Filters = () => {
 
       return router.push(`${pathname}?${queryParams.toString()}`);
     }
-    queryParams.set(name, newValue[name]);
+    queryParams.set(name, String(newValue[name]));
     return router.push(`${pathname}?${queryParams.toString()}`);
   }
 
   function handleButton() {
-    queryParams.set("min", String(min));
-    queryParams.set("max", String(max));
-    router.push(`${pathname}?${queryParams.toString()}`);
-    console.log(queryParams.toString());
-    
+    if (max && min) {
+      queryParams.set("min", String(min));
+      queryParams.set("max", String(max));
+      router.push(`${pathname}?${queryParams.toString()}`);
+    } else {
+      toast.error("مفداری حداقل و حداکثر را وارد کنید ");
+    }
   }
 
-  useLayoutEffect(() => {
-    const value = queryParams.values();
-    console.log(value);
-
-    // value && setvalueCheckbox(value);
+  useEffect(() => {
+    queryParams.forEach((value, key) => {
+      setvalueCheckbox((prev) => ({ ...prev, [key]: value }));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <aside dir="rtl" className="md:w-1/3 lg:w-1/4 px-4">
+      {/* {'dropdown mobile'} */}
       <a
         className="md:hidden mb-5  w-full text-center px-4 py-2 inline-block text-lg text-gray-700 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 hover:text-blue-600"
         href="#"
@@ -86,34 +96,21 @@ const Filters = () => {
       <div className="hidden md:block px-6 py-4 border border-gray-200 bg-white rounded shadow-sm">
         <h3 className="font-semibold mb-2">قیمت</h3>
         <div className="grid md:grid-cols-3 gap-x-2">
-          <div className="mb-4">
-            <input
-              name="min"
-              className="appearance-none border border-gray-200 bg-gray-100 rounded-md py-2 px-2 hover:border-gray-400 focus:outline-none focus:border-gray-400 w-full"
-              type="number"
-              placeholder="حداقل"
-              onChange={(e) => setMin(e.target.value)}
-            />
-          </div>
+          <Input
+            className="mb-4 !px-2 "
+            name="min"
+            placeholder="حداقل"
+            onChange={(e) => setMin(e.target.value)}
+          />
 
-          <div className="mb-4">
-            <input
-              name="max"
-              className="appearance-none border border-gray-200 bg-gray-100 rounded-md py-2 px-2 hover:border-gray-400 focus:outline-none focus:border-gray-400 w-full"
-              type="number"
-              placeholder="حداکثر"
-              onChange={(e) => setMax(e.target.value)}
-            />
-          </div>
+          <Input
+            name="max"
+            className="mb-4 !px-2 "
+            placeholder="حداکثر"
+            onChange={(e) => setMax(e.target.value)}
+          />
 
-          <div className="mb-4">
-            <button
-              onClick={handleButton}
-              className="px-1 py-2 text-center w-full inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
-            >
-              بگرد
-            </button>
-          </div>
+          <Button className="mb-4" label="بگرد" onClick={handleButton} />
         </div>
       </div>
 
@@ -131,7 +128,6 @@ const Filters = () => {
                   value={item.value}
                   className="h-4 w-4"
                   onChange={handleClick}
-                  // defaultChecked={item.value === valueCheckbox}
                 />
                 <span className="mr-2 text-gray-500"> {item.label} </span>
               </label>
@@ -150,10 +146,9 @@ const Filters = () => {
                   name="ratings"
                   type="checkbox"
                   value={rating}
-                  checked={rating === valueCheckbox["ratings"]}
+                  checked={rating === Number(valueCheckbox["ratings"])}
                   className="h-4 w-4"
                   onChange={handleClick}
-                  // defaultChecked={checkHandler("ratings", `${rating}`)}
                 />
                 <span className="ml-2 text-gray-500">
                   {" "}

@@ -1,5 +1,3 @@
-"use client";
-
 import React, { FC } from "react";
 import Filters from "../layout/Filters";
 import ProductItem from "./ProductItem";
