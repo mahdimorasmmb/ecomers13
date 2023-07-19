@@ -7,24 +7,42 @@ export type Option = {
 
 interface SelectProps extends React.InputHTMLAttributes<HTMLSelectElement> {
   options: Option[];
+  disabledOption?: number;
 }
 
 const Select: FC<SelectProps> = ({
   options,
   className,
+  disabledOption = 100,
   ...otherProps
 }) => {
   return (
-    <select
-      className={`${className} appearance-none border border-gray-200 bg-gray-100 rounded-md py-2 px-3 hover:border-gray-400 focus:outline-none focus:border-gray-400 w-full `}
-      {...otherProps}
-    >
-      {options.map((country) => (
-        <option  key={country.value} value={country.value}>
-          {country.label}
-        </option>
-      ))}
-    </select>
+    <>
+      <select
+        className={`${className} bg-gray-100 border-gray-100 select select-ghost w-full  `}
+        {...otherProps}
+      >
+        {options.map((country, i) => {
+          if (disabledOption === i) {
+            return (
+              <option
+                disabled
+                selected
+                key={country.value}
+                value={country.value}
+              >
+                {country.label}
+              </option>
+            );
+          }
+          return (
+            <option key={country.value} value={country.value}>
+              {country.label}
+            </option>
+          );
+        })}
+      </select>
+    </>
   );
 };
 

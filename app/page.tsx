@@ -5,23 +5,24 @@ export interface ProductDataResponse {
   products: [Product];
   filteredProductsCount: number;
   resPerPage: number;
-  productCount: number;
+  productsCount: number;
 }
 
 const getProducts = async (searchParams?: {
   [key: string]: string | string[] | undefined;
 }) => {
   const url = {
-    ["category"]: searchParams && searchParams["category"],
-    ["page"]: searchParams && searchParams["page"],
+    category: searchParams && searchParams["category"],
+    page: searchParams && searchParams["page"],
     ["ratings[gte]"]: searchParams && searchParams["ratings"],
     ["price[gte]"]: searchParams && searchParams["min"],
     ["price[lte]"]: searchParams && searchParams["max"],
-    ["name"]: searchParams && searchParams["name"],
+    name: searchParams && searchParams["name"],
   };
   const queryString = searchParams && getQueryStrings(url);
   const response = await fetch(
-    `${process.env.API_URL}/api/products?${queryString}`
+    `${process.env.API_URL}/api/products?${queryString}`,
+    { cache: "no-store" }
   );
   const data = await response.json();
 

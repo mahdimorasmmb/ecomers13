@@ -16,7 +16,7 @@ const Register = () => {
 
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
-    const res = await fetch(`${process.env.API_URL}/api/user`, {
+    const res = await fetch(`/api/user`, {
       method: "POST",
       body: JSON.stringify({
         name,

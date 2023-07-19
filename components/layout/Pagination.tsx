@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { FC } from "react";
@@ -9,6 +9,8 @@ interface Props {
 }
 
 const Pagination: FC<Props> = ({ itemsCount, resPerPage }) => {
+ 
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -35,7 +37,9 @@ const Pagination: FC<Props> = ({ itemsCount, resPerPage }) => {
       buttons.push(
         <button
           key={i}
-          className={`btn text-white border-gray-500 border hover:bg-blue-700 bg-blue-600${i === page ? "btn-active bg-blue-700" : ""}`}
+          className={`btn text-white border-gray-500 border hover:bg-blue-700 bg-blue-600${
+            i === page ? "btn-active bg-blue-700" : ""
+          }`}
           onClick={() => handlePageChange(i)}
         >
           {i}

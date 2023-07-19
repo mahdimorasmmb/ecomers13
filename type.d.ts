@@ -19,13 +19,7 @@ interface Product {
       url: string;
     }
   ];
-  reviews: [
-    {
-      rating: number;
-      comment: string;
-      createdAt: string;
-    }
-  ];
+  reviews: Array<Review>;
   createdAt: string;
   __v: number;
 }
@@ -40,12 +34,11 @@ interface User {
   };
   role: string;
   createdAt: string;
-  _id:string
+  _id: string;
 }
 
-
 interface Address {
-  _id:string
+  _id: string;
   street: string;
   city: string;
   state: string;
@@ -53,4 +46,38 @@ interface Address {
   zipCode: string;
   country: string;
   createdAt: string;
+}
+
+interface Review {
+  _id: string;
+  user: User;
+  rating: number;
+  comment: string;
+  createdAt: string;
+}
+
+interface OrderItem {
+  image: string;
+  name: string;
+  price: string;
+  product: string;
+  quantity: string;
+  _id: string;
+}
+
+interface PaymentInfo {
+  amountPaid: number;
+  id: string;
+  status: string;
+  taxPaid: number;
+}
+
+interface Order {
+  _id:str
+  createAt: string;
+  orderItems: Array<OrderItem>;
+  orderStatus: string;
+  paymentInfo: PaymentInfo;
+  shippingInfo: Address;
+  user: User;
 }

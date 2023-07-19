@@ -8,14 +8,14 @@ export interface ProductDataResponse {
   products: [Product];
   filteredProductsCount: number;
   resPerPage: number;
-  productCount: number;
+  productsCount: number;
 }
 
 const getProducts = async (searchParams?: {
   [key: string]: string | string[] | undefined;
 }) => {
   const url = {
-    ["page"]: searchParams && searchParams["page"],
+    page: searchParams && searchParams["page"],
   };
   const queryString = searchParams && getQueryStrings(url);
   const response = await fetch(

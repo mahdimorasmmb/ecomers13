@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export default async function api<T>(url: string, options: RequestInit) {
   const response = await fetch(`${process.env.API_URL}/${url}`, { ...options });
   if (!response.ok) {
@@ -17,4 +19,10 @@ export const postData = async (url: string, body: {}) => {
   }
 
   return await response.json();
+};
+
+//////////////////////////////////
+
+export const postReviews = (reviewData: {}) => {
+  return axios.put(`/api/products/review`, reviewData);
 };

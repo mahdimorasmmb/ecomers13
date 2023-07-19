@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
@@ -55,9 +56,12 @@ export const useCartStore = create<State & Actions>()(
       addToCart: (product) => {
         const cart = get().cart;
         const cartItem = cart.find((item) => item._id === product._id);
-
+        toast.success('ایتم مورد نظر به سبد حرید اضافه شد',{
+          position:'top-center'
+        })
         // If the item already exists in the Cart, increase its quantity
         if (cartItem) {
+          
           const updatedCart = cart.map((item) =>
             item._id === product._id
               ? { ...item, quantity: item.quantity + 1 }

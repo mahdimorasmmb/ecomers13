@@ -2,7 +2,7 @@ import NewProduct from "@/components/admin/NewProducts";
 import React from "react";
 
 const Page = () => {
-  return <NewProduct />;
+  return <NewProduct  />;
 };
 
 export default Page;

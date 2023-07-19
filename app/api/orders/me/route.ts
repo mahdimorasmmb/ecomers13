@@ -15,7 +15,9 @@ export async function GET(req: Request) {
 
     await connectDb();
     const resPerPage = 2;
-    const ordersCount = await Order.countDocuments();
+    const ordersCount = await Order.countDocuments().find({
+      user: getUser_id(req),
+    });
     const { searchParams } = new URL(req.url);
 
     const apiFilters = new APIFilters(Order.find(), searchParams).pagination(

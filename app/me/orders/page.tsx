@@ -5,9 +5,9 @@ import getQueryStrings from "@/tools/getQueryStrings";
 import { cookies, headers } from "next/headers";
 
 export interface OrdersDataResponse {
-  orders: any;
+  orders: Array<Order>;
+  ordersCount: Array<Order>;
   resPerPage: number;
-  ordersCount: number;
 }
 
 const getOrders = async (searchParams: { [key: string]: string }) => {
@@ -38,8 +38,7 @@ const Page = async ({
   searchParams: { [key: string]: string };
 }) => {
   const orders = await getOrders(searchParams);
-  console.log(orders);
-  return <ListOrders orders={orders} />;
+  return <ListOrders {...orders} />;
 };
 
 export default Page;

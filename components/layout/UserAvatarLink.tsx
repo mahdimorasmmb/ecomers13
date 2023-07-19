@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { FC } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,9 +9,9 @@ interface Props {
   session: Session | null;
 }
 
-const UserAvatarLink: FC<Props> =  ({ session }) => {
-  const clientSession =  useSession();
-  const user = session ? (session.user as User) : (clientSession?.data?.user as User);
+const UserAvatarLink: FC<Props> = ({ session }) => {
+  const clientSession = useSession();
+  const user = session ? session.user : clientSession?.data?.user;
   return (
     <>
       {user ? (
@@ -40,7 +40,7 @@ const UserAvatarLink: FC<Props> =  ({ session }) => {
           className="px-3 py-2 inline-block text-center text-gray-700 bg-white shadow-sm border border-gray-200 rounded-md hover:bg-gray-100 hover:border-gray-300"
         >
           <i className="text-gray-400 w-5 fa fa-user"></i>
-          <span className="hidden lg:inline ml-1">Login</span>
+          <span className="hidden lg:inline ml-1">وارد شدن</span>
         </Link>
       )}
     </>

@@ -1,9 +1,6 @@
-import { getToken } from "next-auth/jwt";
 import ErrorHandler from "../utils/errorHandler";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { NextRequest, NextResponse } from "next/server";
-import { getCsrfToken, getSession } from "next-auth/react";
 
 const isAuthenticatedUser = async (requset: any, role?: string) => {
   const session = await getServerSession(authOptions);

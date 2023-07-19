@@ -6,7 +6,7 @@ import { stat, mkdir, writeFile } from "fs/promises";
 import mime from "mime";
 import { uploadImage } from "./cloudinary";
 
-const uploderInPublic = async (file: Blob) => {
+const uploderInPublic = async (file: Blob, path_storeg: string) => {
   const buffer = Buffer.from(await file.arrayBuffer());
 
   const relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
@@ -17,12 +17,6 @@ const uploderInPublic = async (file: Blob) => {
   } else {
     tempraryImageDirectory = "/tmp/";
   }
-  // const uploadDir = join(process.cwd(), "public", relativeUploadDir);
-  console.log(
-    tempraryImageDirectory,
-    "================================================"
-  );
-
   try {
     await stat(tempraryImageDirectory);
   } catch (e: any) {
@@ -50,7 +44,7 @@ const uploderInPublic = async (file: Blob) => {
     console.log(url, "++++++++++++++++++++++++++++++++++++++++++++");
 
     const uploader = async (path: string) =>
-      await uploadImage(path, "/buyitnow/avatars");
+      await uploadImage(path, path_storeg);
 
     const avatarResponse = await uploader(
       `${tempraryImageDirectory}/${filename}`

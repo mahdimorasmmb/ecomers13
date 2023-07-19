@@ -1,15 +1,13 @@
 import errorMiddleware from "@/backend/middlewares/error";
 
-import * as dateFn from "date-fns";
+
 import { NextRequest, NextResponse } from "next/server";
 import ErrorHandler from "@/backend/utils/errorHandler";
-import { uploadImage } from "@/backend/utils/cloudinary";
+
 import uploderInPublic from "@/backend/utils/uploder_public";
 import User from "@/backend/models/user";
 import getUser_id from "@/backend/utils/getUser_id";
 import isAuthenticatedUser from "@/backend/middlewares/auth";
-import axios from "axios";
-import { getSession } from "next-auth/react";
 interface RequestBody {
   name: string;
   email: string;
@@ -32,7 +30,7 @@ export async function PUT(request: NextRequest) {
       throw new ErrorHandler("select avatar is required.", 400);
     }
 
-    const resUplode = await uploderInPublic(file);
+    const resUplode = await uploderInPublic(file, "/buyitnow/avatars");
     const avatar = resUplode;
 
     const user = await User.findByIdAndUpdate(getUser_id(request), {

@@ -1,16 +1,36 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { FC, useState } from "react";
 import StarRatings from "react-star-ratings";
 import BreadCrumbs, { IBreadCrumbs } from "../layout/BreadCrumbs";
 import { useCartStore } from "@/store/cart";
+import Image from "next/image";
+import Button from "../Button";
+import { Session } from "next-auth";
+import dynamic from "next/dynamic";
 
-const ProductDetails = ({ product }: { product: Product }) => {
+const NewReview = dynamic(() => import("../reviews/NewReview"));
+
+const Reviews = dynamic(() => import("../reviews/Reviews"));
+
+interface Props {
+  canUserReview: boolean;
+  product: Product;
+  serverSession: Session | null;
+}
+
+const ProductDetails: FC<Props> = ({
+  product,
+  canUserReview,
+  serverSession,
+}) => {
+  const [imageSrc, setImageSrc] = useState(
+    product.images[0]?.url || "/images/default_product.png"
+  );
   const addToCart = useCartStore((state) => state.addToCart);
-  const imgRef = useRef<HTMLImageElement>(null);
 
-  const setImgPreview = (url: any) => {
-    imgRef.current ? (imgRef.current.src = url) : "";
+  const setImgPreview = (url: string) => {
+    setImageSrc(url);
   };
 
   const inStock = product?.stock >= 1;
@@ -26,6 +46,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
   const addToCartHandler = () => {
     addToCart(product);
   };
+
   return (
     <>
       <BreadCrumbs breadCrumbs={breadCrumbs} />
@@ -34,17 +55,12 @@ const ProductDetails = ({ product }: { product: Product }) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-5">
             <aside>
               <div className="border border-gray-200 shadow-sm p-3 text-center rounded mb-5">
-                <img
-                  ref={imgRef}
-                  className="object-cover inline-block"
-                  src={
-                    product?.images[0]
-                      ? product?.images[0].url
-                      : "/images/default_product.png"
-                  }
+                <Image
+                  className=" w-[340px] h-[340px]  inline-block"
+                  src={imageSrc}
                   alt="Product title"
-                  width="340"
-                  height="340"
+                  width={340}
+                  height={340}
                 />
               </div>
               <div className="space-x-2 overflow-auto text-center whitespace-nowrap">
@@ -54,7 +70,7 @@ const ProductDetails = ({ product }: { product: Product }) => {
                     className="inline-block border border-gray-200 p-1 rounded-md hover:border-blue-500 cursor-pointer"
                     onClick={() => setImgPreview(img?.url)}
                   >
-                    <img
+                    <Image
                       className="w-14 h-14"
                       src={img.url}
                       alt="Product title"
@@ -98,10 +114,16 @@ const ProductDetails = ({ product }: { product: Product }) => {
               <p className="mb-4 text-gray-500">{product?.description}</p>
 
               <div className="flex flex-wrap gap-2 mb-5">
-                <button onClick={addToCartHandler} className="px-4 py-2 inline-block text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700">
-                  <i className="fa fa-shopping-cart mr-2"></i>
-                  به سبد خرید اضافه کنید
-                </button>
+                <Button
+                  onClick={addToCartHandler}
+                  label={
+                    <>
+                      {" "}
+                      <i className="fa fa-shopping-cart mr-2"></i>
+                      به سبد خرید اضافه کنید
+                    </>
+                  }
+                />
               </div>
 
               <ul className="mb-5">
@@ -130,14 +152,18 @@ const ProductDetails = ({ product }: { product: Product }) => {
             </main>
           </div>
 
-          {/* <NewReview /> */}
+          {canUserReview ? (
+            <NewReview product={product} serverSession={serverSession} />
+          ) : (
+            ""
+          )}
           <hr />
 
           <div className="font-semibold">
             <h1 className="text-gray-500 review-title mb-6 mt-10 text-2xl">
               نظرات دیگر مشتریان
             </h1>
-            {/* <Reviews /> */}
+            <Reviews reviews={product.reviews} />
           </div>
         </div>
       </section>

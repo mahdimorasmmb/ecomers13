@@ -1,6 +1,6 @@
 import NewAddress from "@/components/user/NewAddress";
 import api from "@/tools/api";
-import { cookies } from "next/headers";
+import { headers } from "next/headers";
 import React from "react";
 
 interface Data {
@@ -8,13 +8,10 @@ interface Data {
 }
 
 const getAddress = async (id: string) => {
-  const nextCookies = cookies();
-  const nextAuthSessionToken = nextCookies.get("next-auth.session-token");
-
   return await api<Data>(`api/address/${id}`, {
     cache: "no-store",
     headers: {
-      Cookie: `${nextAuthSessionToken?.name}=${nextAuthSessionToken?.value}`,
+      cookie: headers().get("cookie") ?? "",
     },
   });
 };

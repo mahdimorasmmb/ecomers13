@@ -1,5 +1,6 @@
 "use client";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import React, { FC } from "react";
 import { ToastContainer } from "react-toastify";
@@ -10,11 +11,15 @@ interface Props {
 }
 
 const Provider: FC<Props> = ({ children }) => {
+  const [queryClient] = React.useState(() => new QueryClient());
+
   return (
-    <SessionProvider>
-      {children}
-      <ToastContainer />
-    </SessionProvider>
+    <QueryClientProvider client={queryClient}>
+      <SessionProvider>
+        {children}
+        <ToastContainer />
+      </SessionProvider>
+    </QueryClientProvider>
   );
 };
 
