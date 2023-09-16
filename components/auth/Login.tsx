@@ -57,7 +57,9 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <Button label="ورود" type="submit" className="w-full mt-2" />
+        <Button  type="submit" className="w-full mt-2" >
+        ورود
+        </Button>
 
         <hr className="mt-4" />
 

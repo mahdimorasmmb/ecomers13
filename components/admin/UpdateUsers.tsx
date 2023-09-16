@@ -105,11 +105,12 @@ const UpdateUser = ({ user }: { user: any }) => {
         </div>
 
         <Button
-          isLoding={mutation.isLoading}
+          // isLoding={mutation.isLoading}
           type="submit"
           className="w-full justify-center "
-          label="به روز رسانی"
-        />
+        >
+          به روز رسانی
+        </Button>
       </form>
     </div>
   );

@@ -42,7 +42,7 @@ const UpdatePassword = () => {
             control={control}
             render={({ field }) => (
               <FormInput
-              type="password"
+                type="password"
                 warperClassName="mt-2"
                 {...field}
                 label="رمز عبور فعلی"
@@ -57,7 +57,7 @@ const UpdatePassword = () => {
             control={control}
             render={({ field }) => (
               <FormInput
-              type="password"
+                type="password"
                 warperClassName="mt-2"
                 {...field}
                 label="رمز عبور جدید"
@@ -68,11 +68,9 @@ const UpdatePassword = () => {
             )}
           />
 
-          <Button
-            type="submit"
-            className="w-full mt-4"
-            label="  به روز رسانی"
-          />
+          <Button type="submit" className="w-full mt-4">
+            به روز رسانی
+          </Button>
         </form>
       </div>
     </>

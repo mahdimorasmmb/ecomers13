@@ -33,7 +33,9 @@ export const Search = () => {
         placeholder="
       محصول  مورد نظرتان را جستجو کنید ..."
       />
-      <Button label="جستوجو" />
+      <Button >
+      جستوجو
+      </Button>
     </form>
   );
 };

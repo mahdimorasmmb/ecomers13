@@ -116,14 +116,13 @@ const ProductDetails: FC<Props> = ({
               <div className="flex flex-wrap gap-2 mb-5">
                 <Button
                   onClick={addToCartHandler}
-                  label={
-                    <>
+                 >
+                   <>
                       {" "}
                       <i className="fa fa-shopping-cart mr-2"></i>
                       به سبد خرید اضافه کنید
                     </>
-                  }
-                />
+                 </Button>
               </div>
 
               <ul className="mb-5">

@@ -169,14 +169,18 @@ const NewAddress = ({ address }: Props) => {
               type="button"
               className="w-full bg-red-500 hover:bg-red-800 mt-5"
               onClick={handleDeletedAddress}
-              label="حذف کردن"
-            />
+             
+            >
+               حذف کردن
+            </Button>
           )}
           <Button
             className="w-full mt-5"
             type="submit"
-            label={address ? "ویرایش کردن" : " اضافه کردن"}
-          />
+           
+          >
+            {address ? "ویرایش کردن" : " اضافه کردن"}
+          </Button>
         </div>
       </form>
     </div>

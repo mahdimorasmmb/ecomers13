@@ -102,12 +102,12 @@ const Shipping: FC<Props> = ({ addresses }) => {
                 <Link href="/address/new">
                   <Button
                     className="flex items-center gap-2"
-                    label={
-                      <>
+                   
+                  >
+                     <>
                         <i className="mr-1 fa fa-plus"></i>آدرس جدید اضافه کنید
                       </>
-                    }
-                  />
+                  </Button>
                 </Link>
 
                 <div className="flex gap-2 justify-end space-x-2 mt-10">

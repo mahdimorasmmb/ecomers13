@@ -75,7 +75,9 @@ const Register = () => {
           required
         />
 
-        <Button className="w-full" label="ثبت نام" type="submit" />
+        <Button className="w-full"  type="submit" >
+      ثبت نام
+        </Button>
 
         <hr className="mt-4" />
 

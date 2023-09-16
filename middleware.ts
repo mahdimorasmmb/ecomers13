@@ -6,8 +6,15 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
   const loginPaths = ["/me", "/shipping"].some((path) =>
     pathname.startsWith(path)
   );
+  const login = ["/login"].some((path) => pathname.startsWith(path));
 
-  if (loginPaths) {
+  if (login) {
+    const token = await getToken({ req: request });
+    if (token) {
+      const url = new URL(`/me`, request.url);
+      return NextResponse.redirect(url);
+    }
+  } else if (loginPaths) {
     const token = await getToken({ req: request });
     if (!token) {
       const url = new URL(`/login`, request.url);
@@ -22,7 +29,7 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
       url.searchParams.set("callbackUrl", encodeURI(request.url));
       return NextResponse.redirect(url);
     }
-    if (token.user?.role !== "admin") {      
+    if (token.user?.role !== "admin") {
       const url = new URL(`/403`, request.url);
       return NextResponse.rewrite(url);
     }

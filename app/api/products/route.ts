@@ -40,7 +40,9 @@ export async function GET(request: Request) {
     const resPerPage = 3;
     const productsCount = await Product.countDocuments();
 
+
     const { searchParams } = new URL(request.url);
+
 
     const apiFilters = new APIFilters(
       Product.find() as Query<ProductDocument[], ProductDocument, {}>,

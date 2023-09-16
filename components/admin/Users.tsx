@@ -68,14 +68,14 @@ const Users: FC<UsersDataResponse> = ({ resPerPage, users, usersCount }) => {
 
                     <Button
                       onClick={() => deleteHandler(user?._id)}
-                      isLoding={mutation.isLoading}
+                      // isLoding={mutation.isLoading}
                       className="bg-red-400 hover:bg-red-600 "
-                      label={
-                        <>
+                     
+                    >
+                       <>
                           <i className="fa fa-trash" aria-hidden="true"></i>
                         </>
-                      }
-                    />
+                    </Button>
                   </div>
                 </td>
               </tr>

@@ -151,7 +151,9 @@ const NewProduct = ({ product }: { product?: Product }) => {
             )}
           />
         </div>
-        <Button className="w-full" type="submit" label="ایجاد محصول" />
+        <Button className="w-full" type="submit">
+          ایجاد محصول
+        </Button>
       </form>
     </section>
   );

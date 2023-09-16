@@ -84,11 +84,14 @@ const NewReview: FC<Props> = ({ product, serverSession }) => {
         </FormItem>
 
         <Button
-          isLoding={mutation.isLoading}
+          // isLoding={mutation.isLoading}
           className="my-3"
           type="submit"
-          label="ارسال بررسی"
-        />
+      
+        
+          >
+            ارسال بررسی
+          </Button>
       </form>
     </div>
   );

@@ -110,7 +110,9 @@ const Filters = () => {
             onChange={(e) => setMax(e.target.value)}
           />
 
-          <Button className="mb-4" label="بگرد" onClick={handleButton} />
+          <Button className="mb-4"  onClick={handleButton} >
+          بگرد
+          </Button>
         </div>
       </div>
 

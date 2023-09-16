@@ -1,6 +1,8 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import { SessionProvider } from "next-auth/react";
 import React, { FC } from "react";
 import { ToastContainer } from "react-toastify";
@@ -19,6 +21,7 @@ const Provider: FC<Props> = ({ children }) => {
         {children}
         <ToastContainer />
       </SessionProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

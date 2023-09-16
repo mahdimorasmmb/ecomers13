@@ -106,11 +106,13 @@ const UploadImages = ({ id }: { id: string }) => {
 
         <Button
           disabled={images.length === 0}
-          isLoding={mutation.isLoading}
-          label=" بارگذاری"
+          // isLoding={mutation.isLoading}
+     
           className="w-full justify-center "
           type="submit"
-        />
+        >
+          بارگذاری
+        </Button>
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
 import "./globals.css";
 import localFont from "next/font/local";
 import Provider from "@/components/auth/Provider";
-import Header from "@/components/layout/Header";
+import Headers from "@/components/layout/headers";
 
 const yekanFont = localFont({
   src: "./font/Yekan.woff2",
@@ -10,7 +10,7 @@ const yekanFont = localFont({
 
 export const metadata = {
   title: "فروشگاه لوازم دیجیتال",
-  description:  "فروشگاه لوازم دیجیتال"
+  description: "فروشگاه لوازم دیجیتال",
 };
 
 export default async function RootLayout({
@@ -19,10 +19,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={yekanFont.className}>
+    <html   lang="en">
+      <body className={`${yekanFont.className} bg-[#f5f8fb]`}>
         <Provider>
-          <Header />
+          <Headers />
           {children}
         </Provider>
       </body>

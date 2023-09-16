@@ -39,12 +39,12 @@ const Profile = async ({ dataAddresses }: Props) => {
         <Link href="/address/new">
           <Button
             className="flex items-center gap-2"
-            label={
+           
+          >
               <>
                 <i className="mr-1 fa fa-plus"></i>آدرس جدید اضافه کنید
               </>
-            }
-          />
+          </Button>
         </Link>
       </div>
       <hr className="my-4" />
